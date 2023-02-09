@@ -38,14 +38,15 @@ def changes_per_hour():
         price_xrp = get_price_xrp(bitcoin_api_url)
         if price_xrp > max_xpr_price:
             max_xpr_price = price_xrp
-        elif price_xrp < max_xpr_price and price_xrp != 0:
-            difference = max_xpr_price - price_xrp
-            percent = max_xpr_price / 100
-            if difference > percent:
-                difference_percent = difference / percent
-                print("Цена снизилась на ", difference_percent, "%")
-        else:
+        elif price_xrp == 0:
             print(datetime.now(), "Не удалось получить ответ от сайта")
+        else:
+            if price_xrp != max_xpr_price:
+                difference = max_xpr_price - price_xrp
+                percent = max_xpr_price / 100
+                if difference > percent:
+                    difference_percent = difference / percent
+                    print("Цена снизилась на ", difference_percent, "%")
         sleep(30)
     price_xpr_dict[str(datetime.now())] = max_xpr_price
 
